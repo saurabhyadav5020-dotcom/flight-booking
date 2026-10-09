@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FlightBook - Payment</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+
+        /* Navbar */
+
+        header {
+            height: 70px;
+            padding: 0 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+
+        nav a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+        }
+
+
+        nav a:hover {
+            color: #0066ff;
+        }
+
+
+        /* Main */
+
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+
+        .page-title p {
+            color: #6b7280;
+        }
+
+
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+        }
+
+
+        /* Payment Card */
+
+        .payment-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .payment-card h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+
+        /* Payment Methods */
+
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+
+        .method {
+            flex: 1;
+            padding: 14px 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        .method.active {
+            border: 2px solid #0066ff;
+            color: #0066ff;
+            background: #eff6ff;
+        }
+
+
+        /* Form */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+
+        .form-group input:focus {
+            border-color: #0066ff;
+        }
+
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+
+        .pay-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #0066ff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+
+        .pay-btn:hover {
+            background: #0052cc;
+        }
+
+
+        .secure-text {
+            text-align: center;
+            margin-top: 15px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+
+        /* Booking Summary */
+
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            height: fit-content;
+        }
+
+
+        .summary-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+
+        .airline-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+
+        .flight-number {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+
+        .route-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+
+        .route-box h3 {
+            font-size: 18px;
+        }
+
+
+        .route-box p {
+            color: #6b7280;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+
+        .route-arrow {
+            color: #0066ff;
+            font-size: 20px;
+        }
+
+
+        .summary-line {
+            border-top: 1px solid #e5e7eb;
+            margin: 18px 0;
+        }
+
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+
+        .summary-row span:first-child {
+            color: #6b7280;
+        }
+
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        /* Footer */
+
+        footer {
+            margin-top: 50px;
+            padding: 25px;
+            text-align: center;
+            background: #111827;
+            color: white;
+            font-size: 14px;
+        }
+
+
+        /* Responsive */
+
+        @media (max-width: 800px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+
+            nav {
+                gap: 12px;
+            }
+
+
+            .payment-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+
+            .payment-methods {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <header>
+
+        <div class="logo">
+            ✈️ FlightBook
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Flights
+            </a>
+
+            <a href="#">
+                My Bookings
+            </a>
+
+            <a href="#">
+                Login
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Main -->
+
+    <main>
+
+
+        <div class="page-title">
+
+            <h1>
+                Complete Your Payment
+            </h1>
+
+            <p>
+                Securely pay for your flight booking.
+            </p>
+
+        </div>
+
+
+        <div class="payment-layout">
+
+
+            <!-- Payment Section -->
+
+            <div class="payment-card">
+
+                <h2>
+                    Payment Method
+                </h2>
+
+
+                <!-- Payment Methods -->
+
+                <div class="payment-methods">
+
+                    <button
+                        class="method active"
+                        onclick="selectMethod(this, 'card')"
+                    >
+                        💳 Card
+                    </button>
+
+
+                    <button
+                        class="method"
+                        onclick="selectMethod(this, 'upi')"
+                    >
+                        📱 UPI
+                    </button>
+
+
+                    <button
+                        class="method"
+                        onclick="selectMethod(this, 'netbanking')"
+                    >
+                        🏦 Net Banking
+                    </button>
+
+                </div>
+
+
+                <!-- Card Form -->
+
+                <form id="paymentForm">
+
+
+                    <div id="cardForm">
+
+
+                        <div class="form-group">
+
+                            <label for="cardName">
+                                Name on Card
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cardName"
+                                placeholder="Enter name on card"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="cardNumber">
+                                Card Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cardNumber"
+                                placeholder="1234 5678 9012 3456"
+                                maxlength="19"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="row">
+
+
+                            <div class="form-group">
+
+                                <label for="expiry">
+                                    Expiry Date
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="expiry"
+                                    placeholder="MM/YY"
+                                    maxlength="5"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="cvv">
+                                    CVV
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="cvv"
+                                    placeholder="123"
+                                    maxlength="3"
+                                    required
+                                >
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- UPI Form -->
+
+                    <div id="upiForm" style="display: none;">
+
+                        <div class="form-group">
+
+                            <label for="upiId">
+                                UPI ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="upiId"
+                                placeholder="example@upi"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Net Banking -->
+
+                    <div
+                        id="netbankingForm"
+                        style="display: none;"
+                    >
+
+                        <div class="form-group">
+
+                            <label for="bank">
+                                Select Bank
+                            </label>
+
+                            <select
+                                id="bank"
+                                style="
+                                    width: 100%;
+                                    padding: 13px;
+                                    border: 1px solid #d1d5db;
+                                    border-radius: 8px;
+                                    font-size: 15px;
+                                "
+                            >
+
+                                <option value="">
+                                    Select your bank
+                                </option>
+
+                                <option>
+                                    State Bank of India
+                                </option>
+
+                                <option>
+                                    HDFC Bank
+                                </option>
+
+                                <option>
+                                    ICICI Bank
+                                </option>
+
+                                <option>
+                                    Axis Bank
+                                </option>
+
+                                <option>
+                                    Kotak Mahindra Bank
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="pay-btn"
+                        id="payButton"
+                    >
+                        Pay Now
+                    </button>
+
+
+                </form>
+
+
+                <div class="secure-text">
+                    🔒 This is a demo payment for the college project.
+                </div>
+
+            </div>
+
+
+            <!-- Booking Summary -->
+
+            <div class="summary-card">
+
+                <h2>
+                    Booking Summary
+                </h2>
+
+
+                <div
+                    class="airline-name"
+                    id="airline"
+                >
+                    IndiGo
+                </div>
+
+
+                <div
+                    class="flight-number"
+                    id="flight-number"
+                >
+                    6E 2134
+                </div>
+
+
+                <div class="route-box">
+
+
+                    <div>
+
+                        <h3 id="departure">
+                            06:30 AM
+                        </h3>
+
+                        <p id="from">
+                            Delhi
+                        </p>
+
+                    </div>
+
+
+                    <div class="route-arrow">
+                        →
+                    </div>
+
+
+                    <div>
+
+                        <h3 id="arrival">
+                            08:40 AM
+                        </h3>
+
+                        <p id="to">
+                            Mumbai
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="summary-line"></div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Passenger
+                    </span>
+
+                    <span id="passenger">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Passengers
+                    </span>
+
+                    <span id="passengers">
+                        1 Passenger
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Duration
+                    </span>
+
+                    <span id="duration">
+                        2h 10m
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Date
+                    </span>
+
+                    <span id="date">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="summary-line"></div>
+
+
+                <div class="summary-row total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span id="price">
+                        ₹5,200
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2026 FlightBook. All rights reserved.
+
+    </footer>
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+
+        /* Selected Flight */
+
+        const selectedFlight = JSON.parse(
+            localStorage.getItem("selectedFlight")
+        );
+
+
+        /* Passenger */
+
+        const passenger = JSON.parse(
+            localStorage.getItem("passengerDetails")
+        );
+
+
+        /* Show Flight Details */
+
+        if (selectedFlight) {
+
+            document.getElementById("airline").textContent =
+                selectedFlight.airline;
+
+            document.getElementById("flight-number").textContent =
+                selectedFlight.flightNumber;
+
+            document.getElementById("departure").textContent =
+                selectedFlight.departure;
+
+            document.getElementById("arrival").textContent =
+                selectedFlight.arrival;
+
+            document.getElementById("from").textContent =
+                selectedFlight.from;
+
+            document.getElementById("to").textContent =
+                selectedFlight.to;
+
+            document.getElementById("duration").textContent =
+                selectedFlight.duration;
+
+            document.getElementById("passengers").textContent =
+                selectedFlight.passengers;
+
+            document.getElementById("price").textContent =
+                selectedFlight.price;
+
+
+            if (selectedFlight.date) {
+
+                const date = new Date(
+                    selectedFlight.date
+                );
+
+                document.getElementById("date").textContent =
+                    date.toLocaleDateString("en-IN", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    });
+
+            }
+
+        }
+
+
+        /* Show Passenger */
+
+        if (passenger) {
+
+            document.getElementById("passenger").textContent =
+                passenger.firstName + " " + passenger.lastName;
+
+        }
+
+
+        /* Payment Method */
+
+        let selectedMethod = "card";
+
+
+        function selectMethod(button, method) {
+
+            const methods =
+                document.querySelectorAll(".method");
+
+
+            methods.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            button.classList.add("active");
+
+
+            selectedMethod = method;
+
+
+            document.getElementById("cardForm").style.display =
+                "none";
+
+            document.getElementById("upiForm").style.display =
+                "none";
+
+            document.getElementById("netbankingForm").style.display =
+                "none";
+
+
+            if (method === "card") {
+
+                document.getElementById("cardForm").style.display =
+                    "block";
+
+            }
+
+
+            if (method === "upi") {
+
+                document.getElementById("upiForm").style.display =
+                    "block";
+
+            }
+
+
+            if (method === "netbanking") {
+
+                document.getElementById("netbankingForm").style.display =
+                    "block";
+
+            }
+
+        }
+
+
+        /* Payment */
+
+        document
+            .getElementById("paymentForm")
+            .addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+
+                const paymentData = {
+
+                    method: selectedMethod,
+
+                    status: "Successful",
+
+                    transactionId:
+                        "TXN" +
+                        Date.now()
+
+                };
+
+
+                localStorage.setItem(
+                    "paymentDetails",
+                    JSON.stringify(paymentData)
+                );
+
+
+                window.location.href =
+                    "confirmation.html";
+
+            });
+
+
+    </script>
+
+
+</body>
+
+</html>

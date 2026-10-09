@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FlightBook - Booking Confirmed</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+
+        /* Navbar */
+
+        header {
+            height: 70px;
+            padding: 0 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+
+        nav a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+        }
+
+
+        nav a:hover {
+            color: #0066ff;
+        }
+
+
+        /* Main */
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+
+        /* Success */
+
+        .success-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+
+        .success-section h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+
+        .success-section p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+
+        .booking-id {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: #eff6ff;
+            color: #0066ff;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        /* Ticket */
+
+        .ticket {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .ticket-header {
+            background: linear-gradient(135deg, #0066ff, #0047b3);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .ticket-header h2 {
+            font-size: 21px;
+        }
+
+
+        .ticket-header span {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+
+        .ticket-body {
+            padding: 30px;
+        }
+
+
+        /* Airline */
+
+        .airline-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+
+        .airline-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: #eef4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+
+        .airline-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+
+        .flight-number {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+
+        /* Route */
+
+        .route-section {
+            display: grid;
+            grid-template-columns: 1fr 100px 1fr;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+
+        .airport:first-child {
+            text-align: left;
+        }
+
+
+        .airport:last-child {
+            text-align: right;
+        }
+
+
+        .airport h2 {
+            font-size: 27px;
+        }
+
+
+        .airport p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+
+        .route-line {
+            position: relative;
+            height: 2px;
+            background: #d1d5db;
+        }
+
+
+        .route-line::before,
+        .route-line::after {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #0066ff;
+            border-radius: 50%;
+            top: -3px;
+        }
+
+
+        .route-line::before {
+            left: 0;
+        }
+
+
+        .route-line::after {
+            right: 0;
+        }
+
+
+        .plane {
+            position: absolute;
+            left: 50%;
+            top: -12px;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 8px;
+            font-size: 20px;
+        }
+
+
+        /* Details */
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .detail {
+            text-align: center;
+        }
+
+
+        .detail span {
+            display: block;
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+
+        .detail strong {
+            font-size: 14px;
+        }
+
+
+        /* Passenger */
+
+        .passenger-section {
+            padding-top: 25px;
+        }
+
+
+        .passenger-section h3 {
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+
+        .passenger-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+
+        .passenger-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+
+        .passenger-item span {
+            display: block;
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+
+        .passenger-item strong {
+            font-size: 14px;
+        }
+
+
+        /* Payment */
+
+        .payment-section {
+            margin-top: 20px;
+            padding: 18px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .payment-row span {
+            color: #6b7280;
+        }
+
+
+        .payment-row strong {
+            font-size: 21px;
+        }
+
+
+        .paid {
+            color: #16a34a;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+
+        /* Buttons */
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+
+        .action-btn {
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+
+        .home-btn {
+            background: white;
+            color: #0066ff;
+            border: 1px solid #0066ff;
+        }
+
+
+        .print-btn {
+            background: #0066ff;
+            color: white;
+        }
+
+
+        .home-btn:hover {
+            background: #eff6ff;
+        }
+
+
+        .print-btn:hover {
+            background: #0052cc;
+        }
+
+
+        /* Footer */
+
+        footer {
+            margin-top: 50px;
+            padding: 25px;
+            text-align: center;
+            background: #111827;
+            color: white;
+            font-size: 14px;
+        }
+
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+
+            nav {
+                gap: 12px;
+            }
+
+
+            .route-section {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+
+            .airport:first-child,
+            .airport:last-child {
+                text-align: center;
+            }
+
+
+            .route-line {
+                width: 80%;
+                margin: auto;
+            }
+
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .passenger-info {
+                grid-template-columns: 1fr;
+            }
+
+
+            .ticket-header {
+                padding: 20px;
+            }
+
+
+            .ticket-body {
+                padding: 20px;
+            }
+
+
+            .actions {
+                flex-direction: column;
+            }
+
+
+            .action-btn {
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <header>
+
+        <div class="logo">
+            ✈️ FlightBook
+        </div>
+
+
+        <nav>
+
+            <a href="index.html">
+                Flights
+            </a>
+
+
+            <a href="#">
+                My Bookings
+            </a>
+
+
+            <a href="#">
+                Login
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Main -->
+
+    <main>
+
+
+        <!-- Success -->
+
+        <section class="success-section">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <h1>
+                Booking Confirmed!
+            </h1>
+
+
+            <p>
+                Your flight has been booked successfully.
+            </p>
+
+
+            <div class="booking-id">
+                Booking ID: <span id="bookingId">FB000000</span>
+            </div>
+
+        </section>
+
+
+        <!-- Ticket -->
+
+        <div class="ticket">
+
+
+            <!-- Ticket Header -->
+
+            <div class="ticket-header">
+
+                <h2>
+                    ✈️ FlightBook E-Ticket
+                </h2>
+
+
+                <span>
+                    CONFIRMED
+                </span>
+
+            </div>
+
+
+            <!-- Ticket Body -->
+
+            <div class="ticket-body">
+
+
+                <!-- Airline -->
+
+                <div class="airline-section">
+
+                    <div class="airline-icon">
+                        ✈️
+                    </div>
+
+
+                    <div>
+
+                        <div
+                            class="airline-name"
+                            id="airline"
+                        >
+                            IndiGo
+                        </div>
+
+
+                        <div
+                            class="flight-number"
+                            id="flightNumber"
+                        >
+                            6E 2134
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Route -->
+
+                <div class="route-section">
+
+
+                    <div class="airport">
+
+                        <h2 id="from">
+                            Delhi
+                        </h2>
+
+                        <p id="departure">
+                            06:30 AM
+                        </p>
+
+                    </div>
+
+
+                    <div class="route-line">
+
+                        <div class="plane">
+                            ✈️
+                        </div>
+
+                    </div>
+
+
+                    <div class="airport">
+
+                        <h2 id="to">
+                            Mumbai
+                        </h2>
+
+                        <p id="arrival">
+                            08:40 AM
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Flight Details -->
+
+                <div class="details-grid">
+
+
+                    <div class="detail">
+
+                        <span>
+                            DATE
+                        </span>
+
+                        <strong id="date">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <span>
+                            DURATION
+                        </span>
+
+                        <strong id="duration">
+                            2h 10m
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <span>
+                            PASSENGERS
+                        </span>
+
+                        <strong id="passengers">
+                            1 Passenger
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Passenger -->
+
+                <div class="passenger-section">
+
+                    <h3>
+                        Passenger Details
+                    </h3>
+
+
+                    <div class="passenger-info">
+
+
+                        <div class="passenger-item">
+
+                            <span>
+                                NAME
+                            </span>
+
+                            <strong id="passengerName">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="passenger-item">
+
+                            <span>
+                                EMAIL
+                            </span>
+
+                            <strong id="email">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="passenger-item">
+
+                            <span>
+                                MOBILE
+                            </span>
+
+                            <strong id="phone">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- Payment -->
+
+                <div class="payment-section">
+
+                    <div class="payment-row">
+
+                        <span>
+                            Total Amount Paid
+                        </span>
+
+                        <strong id="price">
+                            ₹5,200
+                        </strong>
+
+                    </div>
+
+
+                    <div class="paid">
+                        ✓ Payment Successful
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- Actions -->
+
+        <div class="actions">
+
+
+            <a
+                href="index.html"
+                class="action-btn home-btn"
+            >
+                ← Back to Home
+            </a>
+
+
+            <button
+                class="action-btn print-btn"
+                onclick="window.print()"
+            >
+                🖨️ Print E-Ticket
+            </button>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2026 FlightBook. All rights reserved.
+
+    </footer>
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+
+        /* Get Stored Data */
+
+        const selectedFlight = JSON.parse(
+            localStorage.getItem("selectedFlight")
+        );
+
+
+        const passenger = JSON.parse(
+            localStorage.getItem("passengerDetails")
+        );
+
+
+        const payment = JSON.parse(
+            localStorage.getItem("paymentDetails")
+        );
+
+
+        /* Generate Booking ID */
+
+        let bookingId =
+            localStorage.getItem("bookingId");
+
+
+        if (!bookingId) {
+
+            bookingId =
+                "FB" +
+                Math.floor(
+                    100000 + Math.random() * 900000
+                );
+
+            localStorage.setItem(
+                "bookingId",
+                bookingId
+            );
+
+        }
+
+
+        document.getElementById("bookingId").textContent =
+            bookingId;
+
+
+        /* Flight Details */
+
+        if (selectedFlight) {
+
+            document.getElementById("airline").textContent =
+                selectedFlight.airline;
+
+
+            document.getElementById("flightNumber").textContent =
+                selectedFlight.flightNumber;
+
+
+            document.getElementById("from").textContent =
+                selectedFlight.from;
+
+
+            document.getElementById("to").textContent =
+                selectedFlight.to;
+
+
+            document.getElementById("departure").textContent =
+                selectedFlight.departure;
+
+
+            document.getElementById("arrival").textContent =
+                selectedFlight.arrival;
+
+
+            document.getElementById("duration").textContent =
+                selectedFlight.duration;
+
+
+            document.getElementById("passengers").textContent =
+                selectedFlight.passengers;
+
+
+            document.getElementById("price").textContent =
+                selectedFlight.price;
+
+
+            if (selectedFlight.date) {
+
+                const date =
+                    new Date(selectedFlight.date);
+
+
+                document.getElementById("date").textContent =
+                    date.toLocaleDateString("en-IN", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    });
+
+            }
+
+        }
+
+
+        /* Passenger Details */
+
+        if (passenger) {
+
+            document.getElementById("passengerName").textContent =
+                passenger.firstName +
+                " " +
+                passenger.lastName;
+
+
+            document.getElementById("email").textContent =
+                passenger.email;
+
+
+            document.getElementById("phone").textContent =
+                passenger.phone;
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

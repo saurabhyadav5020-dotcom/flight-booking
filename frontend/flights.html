@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FlightBook - Available Flights</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* Navbar */
+
+        header {
+            height: 70px;
+            padding: 0 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #0066ff;
+        }
+
+        /* Search Summary */
+
+        .search-summary {
+            background: linear-gradient(135deg, #0066ff, #0047b3);
+            color: white;
+            padding: 35px 8%;
+        }
+
+        .search-summary h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .search-summary p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .route {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .arrow {
+            opacity: 0.8;
+        }
+
+        /* Main */
+
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top-section h2 {
+            font-size: 22px;
+        }
+
+        .sort-box {
+            padding: 10px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            background: white;
+        }
+
+        /* Flight Card */
+
+        .flight-card {
+            background: white;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            transition: 0.2s;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .flight-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .airline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .airline-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: #eef4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .airline h3 {
+            font-size: 17px;
+        }
+
+        .airline p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .flight-type {
+            padding: 7px 12px;
+            background: #ecfdf3;
+            color: #15803d;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Flight Details */
+
+        .flight-middle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .time {
+            min-width: 150px;
+        }
+
+        .time h2 {
+            font-size: 25px;
+        }
+
+        .time p {
+            color: #6b7280;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .duration {
+            flex: 1;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .line {
+            height: 2px;
+            background: #d1d5db;
+            margin: 10px 30px;
+            position: relative;
+        }
+
+        .line::before,
+        .line::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #0066ff;
+            border-radius: 50%;
+            position: absolute;
+            top: -3px;
+        }
+
+        .line::before {
+            left: 0;
+        }
+
+        .line::after {
+            right: 0;
+        }
+
+        .price-section {
+            min-width: 150px;
+            text-align: right;
+        }
+
+        .price {
+            font-size: 25px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .per-person {
+            color: #6b7280;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .select-btn {
+            margin-top: 12px;
+            padding: 11px 22px;
+            border: none;
+            border-radius: 7px;
+            background: #0066ff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .select-btn:hover {
+            background: #0052cc;
+        }
+
+        /* Bottom Info */
+
+        .info-bar {
+            margin-top: 35px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .info-bar div {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .info-bar strong {
+            display: block;
+            color: #111827;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+
+        footer {
+            margin-top: 50px;
+            padding: 25px;
+            text-align: center;
+            background: #111827;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 750px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .flight-middle {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+
+            .duration {
+                order: 2;
+            }
+
+            .price-section {
+                text-align: left;
+            }
+
+            .time {
+                min-width: auto;
+            }
+
+            .info-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <header>
+
+        <div class="logo">
+            ✈️ FlightBook
+        </div>
+
+        <nav>
+            <a href="index.html">Flights</a>
+            <a href="#">My Bookings</a>
+            <a href="#">Login</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Search Summary -->
+
+    <section class="search-summary">
+
+        <h1>Available Flights</h1>
+
+        <p>Choose the flight that works best for your journey.</p>
+
+        <div class="route">
+            <span>Delhi</span>
+            <span class="arrow">→</span>
+            <span>Mumbai</span>
+        </div>
+
+        <p id="search-details" style="margin-top: 8px;">
+            20 October 2026 · 1 Passenger
+        </p>
+
+    </section>
+
+
+    <!-- Flight Results -->
+
+    <main>
+
+        <div class="top-section">
+
+            <h2>3 Flights Found</h2>
+
+            <select class="sort-box">
+                <option>Sort by: Recommended</option>
+                <option>Lowest Price</option>
+                <option>Earliest Departure</option>
+                <option>Shortest Duration</option>
+            </select>
+
+        </div>
+
+
+        <!-- Flight 1 -->
+
+        <div class="flight-card">
+
+            <div class="flight-top">
+
+                <div class="airline">
+
+                    <div class="airline-icon">
+                        ✈️
+                    </div>
+
+                    <div>
+                        <h3>IndiGo</h3>
+                        <p>6E 2134</p>
+                    </div>
+
+                </div>
+
+                <div class="flight-type">
+                    Non-stop
+                </div>
+
+            </div>
+
+
+            <div class="flight-middle">
+
+                <div class="time">
+
+                    <h2>06:30 AM</h2>
+
+                    <p>DEL · Delhi</p>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <span>2h 10m</span>
+
+                    <div class="line"></div>
+
+                    <span>Non-stop</span>
+
+                </div>
+
+
+                <div class="time">
+
+                    <h2>08:40 AM</h2>
+
+                    <p>BOM · Mumbai</p>
+
+                </div>
+
+
+                <div class="price-section">
+
+                    <div class="price">
+                        ₹5,200
+                    </div>
+
+                    <div class="per-person">
+                        per passenger
+                    </div>
+
+                    <button
+                        class="select-btn"
+                        onclick="selectFlight('IndiGo', '6E 2134', '06:30 AM', '08:40 AM', '2h 10m', '₹5,200')">
+                        Select Flight
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Flight 2 -->
+
+        <div class="flight-card">
+
+            <div class="flight-top">
+
+                <div class="airline">
+
+                    <div class="airline-icon">
+                        ✈️
+                    </div>
+
+                    <div>
+                        <h3>Air India</h3>
+                        <p>AI 864</p>
+                    </div>
+
+                </div>
+
+                <div class="flight-type">
+                    Non-stop
+                </div>
+
+            </div>
+
+
+            <div class="flight-middle">
+
+                <div class="time">
+
+                    <h2>09:15 AM</h2>
+
+                    <p>DEL · Delhi</p>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <span>2h 20m</span>
+
+                    <div class="line"></div>
+
+                    <span>Non-stop</span>
+
+                </div>
+
+
+                <div class="time">
+
+                    <h2>11:35 AM</h2>
+
+                    <p>BOM · Mumbai</p>
+
+                </div>
+
+
+                <div class="price-section">
+
+                    <div class="price">
+                        ₹5,600
+                    </div>
+
+                    <div class="per-person">
+                        per passenger
+                    </div>
+
+                    <button
+                        class="select-btn"
+                        onclick="selectFlight('Air India', 'AI 864', '09:15 AM', '11:35 AM', '2h 20m', '₹5,600')">
+                        Select Flight
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Flight 3 -->
+
+        <div class="flight-card">
+
+            <div class="flight-top">
+
+                <div class="airline">
+
+                    <div class="airline-icon">
+                        ✈️
+                    </div>
+
+                    <div>
+                        <h3>Vistara</h3>
+                        <p>UK 945</p>
+                    </div>
+
+                </div>
+
+                <div class="flight-type">
+                    Non-stop
+                </div>
+
+            </div>
+
+
+            <div class="flight-middle">
+
+                <div class="time">
+
+                    <h2>01:20 PM</h2>
+
+                    <p>DEL · Delhi</p>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <span>2h 15m</span>
+
+                    <div class="line"></div>
+
+                    <span>Non-stop</span>
+
+                </div>
+
+
+                <div class="time">
+
+                    <h2>03:35 PM</h2>
+
+                    <p>BOM · Mumbai</p>
+
+                </div>
+
+
+                <div class="price-section">
+
+                    <div class="price">
+                        ₹6,100
+                    </div>
+
+                    <div class="per-person">
+                        per passenger
+                    </div>
+
+                    <button
+                        class="select-btn"
+                        onclick="selectFlight('Vistara', 'UK 945', '01:20 PM', '03:35 PM', '2h 15m', '₹6,100')">
+                        Select Flight
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bottom Information -->
+
+        <div class="info-bar">
+
+            <div>
+                <strong>🔒 Secure Booking</strong>
+                Your payment is protected
+            </div>
+
+            <div>
+                <strong>🎫 Instant Ticket</strong>
+                Get your e-ticket instantly
+            </div>
+
+            <div>
+                <strong>💰 Best Prices</strong>
+                Compare and choose easily
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2026 FlightBook. All rights reserved.
+
+    </footer>
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+        // Get search data from homepage
+
+        const searchData = JSON.parse(
+            localStorage.getItem("flightSearch")
+        );
+
+
+        // Show searched route and date
+
+        if (searchData) {
+
+            const route = document.querySelector(".route");
+
+            const details = document.querySelector("#search-details");
+
+            const date = new Date(searchData.date);
+
+            const formattedDate = date.toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+
+            route.innerHTML = `
+                <span>${searchData.from}</span>
+                <span class="arrow">→</span>
+                <span>${searchData.to}</span>
+            `;
+
+            details.textContent =
+                `${formattedDate} · ${searchData.passengers}`;
+        }
+
+
+        // Select Flight
+
+        function selectFlight(
+            airline,
+            flightNumber,
+            departure,
+            arrival,
+            duration,
+            price
+        ) {
+
+            const selectedFlight = {
+
+                airline: airline,
+
+                flightNumber: flightNumber,
+
+                departure: departure,
+
+                arrival: arrival,
+
+                duration: duration,
+
+                price: price,
+
+                from: searchData ? searchData.from : "Delhi",
+
+                to: searchData ? searchData.to : "Mumbai",
+
+                date: searchData ? searchData.date : "",
+
+                passengers: searchData
+                    ? searchData.passengers
+                    : "1 Passenger"
+            };
+
+
+            localStorage.setItem(
+                "selectedFlight",
+                JSON.stringify(selectedFlight)
+            );
+
+
+            window.location.href = "passenger.html";
+        }
+
+    </script>
+
+</body>
+
+</html>
