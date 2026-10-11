@@ -1,94 +1,157 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlightBook - Book Your Flight</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#eef4ff">
+
+    <title>FlightBook · Find your next flight</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <header class="site-header">
+        <a class="logo" href="index.html">
+            <span class="logo-mark">✈</span>
+            FlightBook
+        </a>
 
-    <header>
-        <div class="logo">✈️ FlightBook</div>
-
-        <nav>
-            <a href="#">Flights</a>
-            <a href="#">My Bookings</a>
-            <a href="#">Login</a>
+        <nav class="nav-links">
+            <a href="index.html">Explore</a>
+            <a href="flights.html">Flights</a>
+            <a href="index.html#why">Why FlightBook</a>
+            <a class="nav-pill" href="index.html">New search ↗</a>
         </nav>
     </header>
 
     <main>
-
         <section class="hero">
-            <div class="hero-content">
-                <h1>Book Your Next Journey</h1>
-                <p>Search, compare and book flights at the best prices.</p>
+            <div class="hero-panel">
+                <div class="hero-orb"></div>
 
-                <div class="search-box">
+                <div class="hero-copy">
+                    <span class="eyebrow">✦ Your next journey starts here</span>
+                    <h1>The world is closer than you think.</h1>
+                    <p>
+                        Compare live flight options, discover better routes,
+                        and find a journey that fits your plans.
+                    </p>
+                </div>
+            </div>
 
-                    <div class="input-group">
-                        <label>From</label>
-                        <input type="text" placeholder="Delhi">
+            <form class="search-card glass" id="search-form" novalidate>
+                <div class="trip-tabs">
+                    <button type="button" class="trip-tab active" data-trip="oneway">
+                        One way
+                    </button>
+
+                    <button type="button" class="trip-tab" data-trip="roundtrip">
+                        Round trip
+                    </button>
+                </div>
+
+                <div class="search-grid">
+                    <div class="field airport-field">
+                        <label for="from">FROM · CITY OR AIRPORT</label>
+
+                        <input id="from" name="from" autocomplete="off" aria-autocomplete="list" aria-expanded="false"
+                            aria-controls="from-airport-options" placeholder="Type a city, e.g. Delhi" value="Delhi"
+                            required>
+
+                        <div class="airport-options" id="from-airport-options" role="listbox" hidden></div>
+
+                        <p id="from-error" class="field-error" role="alert" hidden></p>
                     </div>
 
-                    <div class="input-group">
-                        <label>To</label>
-                        <input type="text" placeholder="Mumbai">
+                    <div class="field airport-field">
+                        <label for="to">TO · CITY OR AIRPORT</label>
+
+                        <input id="to" name="to" autocomplete="off" aria-autocomplete="list" aria-expanded="false"
+                            aria-controls="to-airport-options" placeholder="Type a city, e.g. Varanasi" value="Mumbai"
+                            required>
+
+                        <div class="airport-options" id="to-airport-options" role="listbox" hidden></div>
+
+                        <p id="to-error" class="field-error" role="alert" hidden></p>
                     </div>
 
-                    <div class="input-group">
-                        <label>Departure</label>
-                        <input type="date">
+                    <div class="field">
+                        <label for="date">DEPARTURE</label>
+                        <input id="date" name="date" type="date" required>
                     </div>
 
-                    <div class="input-group">
-                        <label>Passengers</label>
-                        <select>
-                            <option>1 Passenger</option>
-                            <option>2 Passengers</option>
-                            <option>3 Passengers</option>
-                            <option>4 Passengers</option>
+                    <div class="field">
+                        <label for="passengers">TRAVELLERS</label>
+
+                        <select id="passengers" name="passengers">
+                            <option value="1">1 adult</option>
+                            <option value="2">2 adults</option>
+                            <option value="3">3 adults</option>
+                            <option value="4">4 adults</option>
+                            <option value="5">5 adults</option>
+                            <option value="6">6 adults</option>
+                            <option value="7">7 adults</option>
+                            <option value="8">8 adults</option>
+                            <option value="9">9 adults</option>
                         </select>
                     </div>
 
-                    <button>Search Flights</button>
+                    <div class="field" id="return-field" hidden>
+                        <label for="returnDate">RETURN</label>
+                        <input id="returnDate" name="returnDate" type="date">
+                    </div>
 
+                    <button class="primary-btn" type="submit">
+                        Search flights&nbsp; →
+                    </button>
                 </div>
-            </div>
+
+                <p style="color:#7586a0;font-size:12px;margin:15px 3px 0">
+                    Live results from the connected flight-search API ·
+                    No payment is taken during search.
+                </p>
+            </form>
         </section>
 
-        <section class="features">
+        <section class="features" id="why">
+            <article class="feature glass">
+                <div class="feature-icon">⌕</div>
+                <h3>Explore live options</h3>
+                <p>
+                    Search real flight results through the backend integration
+                    and compare available itineraries.
+                </p>
+            </article>
 
-            <div class="feature-card">
-                <span>🔍</span>
-                <h3>Easy Search</h3>
-                <p>Find flights quickly using our simple search.</p>
-            </div>
+            <article class="feature glass">
+                <div class="feature-icon">↗</div>
+                <h3>Compare with clarity</h3>
+                <p>
+                    Review airline, flight number, timing, duration, stops
+                    and listed fare before choosing.
+                </p>
+            </article>
 
-            <div class="feature-card">
-                <span>💰</span>
-                <h3>Compare Prices</h3>
-                <p>Compare different flights and choose the best fare.</p>
-            </div>
-
-            <div class="feature-card">
-                <span>🎫</span>
-                <h3>Easy Booking</h3>
-                <p>Book your flight and get your digital ticket.</p>
-            </div>
-
+            <article class="feature glass">
+                <div class="feature-icon">◇</div>
+                <h3>A calmer booking flow</h3>
+                <p>
+                    Carry your selected itinerary through passenger details
+                    and the demo checkout flow.
+                </p>
+            </article>
         </section>
-
     </main>
 
-    <footer>
-        <p>© 2026 FlightBook. All rights reserved.</p>
+    <footer class="site-footer">
+        © 2026 FlightBook · Flight search powered by live provider data.
+        Prices and availability may change.
     </footer>
 
+    <script src="js/app.js"></script>
     <script src="js/script.js"></script>
-
 </body>
+
 </html>

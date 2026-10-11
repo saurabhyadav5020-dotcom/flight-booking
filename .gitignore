@@ -1,0 +1,14 @@
+# Java / Maven
+backend/target/
+*.class
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
