@@ -5,7 +5,7 @@ A flight booking platform built with a static frontend and a Spring Boot backend
 ## 🌐 Live Demo
 
 - **Frontend:** https://saurabhyadav5020-dotcom.github.io/flight-booking/
-- **Flight Search:** https://saurabhyadav5020-dotcom.github.io/flight-booking/frontend/flights.html
+- **Flight Search:** https://saurabhyadav5020-dotcom.github.io/flight-booking/frontend/index.html
 - **Backend API Base URL:** https://flight-booking-hxs9.onrender.com
 
 > Note: The frontend and backend are deployed separately. Flight search requires the backend service and a valid SerpApi API key to be configured.
